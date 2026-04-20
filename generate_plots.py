@@ -89,3 +89,71 @@ def plot_scatter(sensor_a, sensor_b, timestamps, ax):
     ax.set_title('Scatter Plot of Sensor Data')
     ax.legend()
     ax.grid(True)
+
+# Create plot_histogram(sensor_a, sensor_b, ax) that draws the histogram
+# from the notebook onto the given Axes object. NumPy-style docstring. 
+# Modifies ax in place, returns None.
+
+def plot_histogram(sensor_a, sensor_b, ax):
+    """
+    Plot overlaid histogram of sensor temperature distributions on the given Axes object.
+
+    This function creates an overlaid histogram showing the distributions
+    of temperature readings from two sensors, with means marked by vertical lines.
+
+    Parameters
+    ----------
+    sensor_a : array_like
+        Temperature readings for Sensor A, shape (200,).
+    sensor_b : array_like
+        Temperature readings for Sensor B, shape (200,).
+    ax : matplotlib.axes.Axes
+        The Axes object on which to draw the plot.
+
+    Returns
+    -------
+    None
+        Modifies the input Axes object in place.
+    """
+    ax.hist(sensor_a, bins=30, alpha=0.5, label='Sensor A', color='blue')
+    ax.hist(sensor_b, bins=30, alpha=0.5, label='Sensor B', color='orange')
+    ax.axvline(np.mean(sensor_a), color='blue', linestyle='--', linewidth=2, label='Sensor A Mean')
+    ax.axvline(np.mean(sensor_b), color='orange', linestyle='--', linewidth=2, label='Sensor B Mean')
+    ax.set_xlabel('Temperature (°C)')
+    ax.set_ylabel('Frequency')
+    ax.set_title('Overlaid Histogram of Sensor Temperature Distributions')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+# Create plot_boxplot(sensor_a, sensor_b, ax) that draws the box plot
+# from the notebook onto the given Axes object. NumPy-style docstring.
+# Modifies ax in place, returns None.
+
+def plot_boxplot(sensor_a, sensor_b, ax):
+    """
+    Plot side-by-side box plot of sensor distributions on the given Axes object.
+
+    This function creates a box plot comparing the distributions of temperature
+    readings from two sensors, with a horizontal line at the overall mean.
+
+    Parameters
+    ----------
+    sensor_a : array_like
+        Temperature readings for Sensor A, shape (200,).
+    sensor_b : array_like
+        Temperature readings for Sensor B, shape (200,).
+    ax : matplotlib.axes.Axes
+        The Axes object on which to draw the plot.
+
+    Returns
+    -------
+    None
+        Modifies the input Axes object in place.
+    """
+    ax.boxplot([sensor_a, sensor_b], labels=['Sensor A', 'Sensor B'])
+    overall_mean = np.mean(np.concatenate([sensor_a, sensor_b]))
+    ax.axhline(overall_mean, color='red', linestyle='--', linewidth=2, label=f'Overall Mean: {overall_mean:.2f}°C')
+    ax.set_ylabel('Temperature (deg C)')
+    ax.set_title('Side-by-Side Box Plot of Sensor Distributions')
+    ax.legend()
+    ax.grid(True, axis='y', alpha=0.3)
