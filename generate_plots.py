@@ -1,0 +1,56 @@
+"""Generate publication-quality sensor data visualizations.
+
+This script creates synthetic temperature sensor data using NumPy
+and produces scatter, histogram, and box plot visualizations saved
+as PNG files.
+
+Usage
+-----
+    python generate_plots.py
+"""
+
+# Create a function generate_data(seed) that returns sensor_a, sensor_b,
+# and timestamps arrays with the same parameters as in the notebook.
+# Use NumPy-style docstring with Parameters and Returns sections.
+
+import numpy as np  # generating synthetic data
+import matplotlib.pyplot as plt  # for creating visualizations
+np.random.seed(19)
+
+def generate_data(seed, n_readings=200, duration=10.0):
+    """
+    Generate synthetic temperature sensor data for two sensors.
+
+    Parameters
+    ----------
+    seed : int
+        Seed to initialize NumPy's random number generator for reproducible output.
+    n_readings : int, optional
+        Number of sensor readings to generate. Default is 200.
+    duration : float, optional
+        Maximum timestamp value in seconds. Default is 10.0.
+
+    Returns
+    -------
+    timestamps : ndarray of shape (n_readings,)
+        Sorted timestamps from 0 to `duration` seconds.
+    sensor_a : ndarray of shape (n_readings,)
+        Temperature readings for Sensor A sampled from a normal distribution
+        with mean 25°C and standard deviation 3°C.
+    sensor_b : ndarray of shape (n_readings,)
+        Temperature readings for Sensor B sampled from a normal distribution
+        with mean 27°C and standard deviation 4.5°C.
+    """
+    rng = np.random.default_rng(seed)
+
+    timestamps = rng.uniform(0.0, duration, n_readings)
+    sensor_a = rng.normal(loc=25.0, scale=3.0, size=n_readings)
+    sensor_b = rng.normal(loc=27.0, scale=4.5, size=n_readings)
+
+    sort_idx = np.argsort(timestamps)
+
+    return (
+        timestamps[sort_idx],
+        sensor_a[sort_idx],
+        sensor_b[sort_idx],
+    )
