@@ -157,3 +157,46 @@ def plot_boxplot(sensor_a, sensor_b, ax):
     ax.set_title('Side-by-Side Box Plot of Sensor Distributions')
     ax.legend()
     ax.grid(True, axis='y', alpha=0.3)
+
+# Create main() that generates data, creates a 1x3 subplot figure,
+# calls each plot function, adjusts layout, and saves as sensor_analysis.png
+# at 150 DPI with tight bounding box.
+
+def main():
+    """
+    Generate sensor data and create publication-quality visualizations.
+
+    This function generates synthetic temperature sensor data, creates a
+    1x3 subplot figure with scatter, histogram, and box plots, adjusts the
+    layout, and saves the figure as a PNG file.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+    """
+    # Generate synthetic data for both sensors using a fixed seed.
+    timestamps, sensor_a, sensor_b = generate_data(1234)
+
+    # Create a single row of three subplots for the three visualizations.
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Draw each plot on its own Axes object.
+    plot_scatter(sensor_a, sensor_b, timestamps, axes[0])
+    plot_histogram(sensor_a, sensor_b, axes[1])
+    plot_boxplot(sensor_a, sensor_b, axes[2])
+
+    # Improve spacing between subplots so labels and titles do not overlap.
+    plt.tight_layout()
+
+    # Save the complete figure to disk as a high-resolution PNG file.
+    plt.savefig('sensor_analysis.png', dpi=150, bbox_inches='tight')
+    print("Plot saved as sensor_analysis.png")
+
+
+if __name__ == '__main__':
+    # Run the main workflow only when the script is executed directly.
+    main()
